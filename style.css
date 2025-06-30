@@ -1,0 +1,243 @@
+/* تنسيقات عامة */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f9fafb;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* الشريط العلوي */
+.site-header {
+    background: linear-gradient(135deg, #4CAF50, #388E3C);
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.site-title {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.search-input {
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 20px;
+    width: 250px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.search-button {
+    padding: 0.7rem 1.5rem;
+    background: #fff;
+    color: #4CAF50;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.search-button:hover {
+    background: #4CAF50;
+    color: #fff;
+}
+
+/* السنوات الدراسية */
+.years-section {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.years-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.year-btn {
+    padding: 1rem;
+    background: linear-gradient(135deg, #4CAF50, #388E3C);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.year-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* الدروس الخاصة بالسنة المختارة */
+.courses-section {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.courses-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.courses-list li {
+    background: #fff;
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: right;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.courses-list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* زر تبديل الوضع */
+.theme-toggle {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    padding: 0.7rem 1.5rem;
+    background: linear-gradient(135deg, #4CAF50, #388E3C);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* الوضع الليلي */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .site-header {
+    background: linear-gradient(135deg, #1e1e1e, #333);
+}
+
+body.dark-mode .year-btn {
+    background: linear-gradient(135deg, #333, #555);
+}
+
+body.dark-mode .courses-list li {
+    background: #333;
+    color: #e0e0e0;
+}
+
+body.dark-mode .theme-toggle {
+    background: linear-gradient(135deg, #333, #555);
+}
+/* رسالة "لا يوجد محتوى بعد" */
+.no-content-message {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: red;
+}
+/* تصميم نتائج البحث */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.search-result-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-result-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* الوضع النهاري */
+body:not(.dark-mode) .search-results {
+    background-color: white;
+    border-color: #ccc;
+}
+
+body:not(.dark-mode) .search-result-item {
+    color: #333;
+}
+
+body:not(.dark-mode) .search-result-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* الوضع الليلي */
+body.dark-mode .search-results {
+    background-color: #333;
+    border-color: #555;
+}
+
+body.dark-mode .search-result-item {
+    color: #e0e0e0;
+}
+
+body.dark-mode .search-result-item:hover {
+    background-color: #555;
+}
