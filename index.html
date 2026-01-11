@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Smart Med Student</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --accent-1: #8b5cf6;
+            --accent-2: #ec4899;
+            --accent-3: #f59e0b;
+            --accent-4: #10b981;
+            --accent-5: #06b6d4;
+            --accent-6: #84cc16;
+            --accent-7: #f97316;
+            --bg-primary: #f0f9ff;
+            --bg-secondary: #e0f2fe;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            --gradient-1: linear-gradient(135deg, #8b5cf6, #ec4899);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #10b981);
+            --gradient-3: linear-gradient(135deg, #f59e0b, #f97316);
+        }
+        
+        .dark-mode {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --card-bg: #1e293b;
+            --header-bg: linear-gradient(135deg, #4338ca, #3730a3);
+            --gradient-1: linear-gradient(135deg, #7c3aed, #be185d);
+            --gradient-2: linear-gradient(135deg, #0891b2, #059669);
+            --gradient-3: linear-gradient(135deg, #d97706, #dc2626);
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(79, 70, 229, 0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.85rem 1.4rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 1.05rem;
+        }
+        
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        nav a:hover::before {
+            left: 100%;
+        }
+        
+        nav a:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg) scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Main Content */
+        main {
+            min-height: calc(100vh - 120px);
+            padding: 3rem 0 4rem;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(40px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+        
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--gradient-1);
+            border-radius: 3px;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        
+        .page-header h1 {
+            font-size: 3.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.8rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+            font-weight: 800;
+        }
+        
+        .dark-mode .page-header h1 {
+            color: #c4b5fd;
+        }
+        
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            max-width: 750px;
+            margin: 0 auto;
+            font-weight: 500;
+            line-height: 1.8;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 4.5rem 2.5rem;
+            background: var(--card-bg);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            margin-bottom: 3.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -120px;
+            left: -120px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .hero-title {
+            font-size: 2.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 2.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+            font-weight: 800;
+        }
+        
+        .dark-mode .hero-title {
+            color: #c4b5fd;
+        }
+        
+        .target-audience {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.2rem;
+            margin: 3.5rem 0;
+        }
+        
+        .audience-card {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            padding: 2.2rem;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark-mode .audience-card {
+            background: linear-gradient(135deg, #334155, #1e293b);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        }
+        
+        .audience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-1);
+        }
+        
+        .audience-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .dark-mode .audience-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+        }
+        
+        .audience-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.8rem;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+        
+        .audience-card:hover .audience-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        .audience-title {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.2rem;
+            font-weight: 800;
+        }
+        
+        .dark-mode .audience-title {
+            color: #c4b5fd;
+        }
+        
+        .audience-desc {
+            color: var(--text-secondary);
+            line-height: 1.9;
+            font-size: 1.15rem;
+        }
+        
+        .special-note {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            padding: 2.8rem;
+            border-radius: 25px;
+            margin-top: 3.5rem;
+            border-left: 6px solid var(--warning);
+            position: relative;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
+        }
+        
+        .dark-mode .special-note {
+            background: linear-gradient(135deg, #37302c, #43382a);
+            border-left: 6px solid #d97706;
+            box-shadow: 0 10px 25px rgba(217, 119, 6, 0.3);
+        }
+        
+        .special-note::before {
+            content: '✨';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.8rem;
+            background: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+        
+        .dark-mode .special-note::before {
+            background: #1e293b;
+            color: #fde047;
+        }
+        
+        .special-note h3 {
+            color: #92400e;
+            margin-bottom: 1.8rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .dark-mode .special-note h3 {
+            color: #fde047;
+        }
+        
+        .special-note p {
+            color: #92400e;
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.9;
+        }
+        
+        .dark-mode .special-note p {
+            color: #fde047;
+        }
+        
+        /* Visitor Counter */
+        .visitor-counter {
+            background: var(--gradient-2);
+            padding: 1.8rem 2.5rem;
+            border-radius: 25px;
+            margin: 2.5rem auto;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 12px 28px rgba(6, 182, 212, 0.3);
+            animation: pulseGlow 3s infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 12px 28px rgba(6, 182, 212, 0.3); }
+            50% { box-shadow: 0 16px 36px rgba(6, 182, 212, 0.5); }
+        }
+        
+        .dark-mode .visitor-counter {
+            box-shadow: 0 12px 28px rgba(8, 145, 178, 0.4);
+        }
+        
+        .visitor-counter h3 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .visitor-count {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* Years Grid */
+        .years-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.8rem;
+            margin-top: 2.5rem;
+        }
+        
+        .year-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+        }
+        
+        .dark-mode .year-card {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(67, 56, 202, 0.3);
+        }
+        
+        .year-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dark-mode .year-card:hover {
+            box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .year-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-4), var(--accent-5), var(--accent-6), var(--accent-7));
+            background-size: 500% 500%;
+            animation: gradientShift 4s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .year-header {
+            padding: 2.5rem;
+            text-align: center;
+            background: var(--header-bg);
+            color: white;
+            position: relative;
+        }
+        
+        .year-number {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 0.8rem;
+            animation: float 3s ease-in-out infinite;
+            text-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            letter-spacing: -2px;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .year-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subjects-list {
+            list-style: none;
+            margin: 2rem 0;
+            padding: 0 2.5rem;
+        }
+        
+        .subjects-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 12px;
+            margin: 0.4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark-mode .subjects-list li {
+            border-bottom: 1px solid #334155;
+        }
+        
+        .subjects-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .subjects-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background: var(--gradient-1);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.3s ease;
+        }
+        
+        .subjects-list li:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .subjects-list li:hover {
+            color: var(--primary-dark);
+            transform: translateX(10px);
+            background: #f8fafc;
+            padding-left: 1.5rem;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+        }
+        
+        .dark-mode .subjects-list li:hover {
+            color: #c4b5fd;
+            background: #334155;
+            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.3);
+        }
+        
+        .subject-icon {
+            font-size: 1.4rem;
+            color: var(--primary);
+            min-width: 28px;
+            text-align: center;
+        }
+        
+        /* Subject Detail Section */
+        .subject-detail-section {
+            display: none;
+            margin-top: 3.5rem;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 30px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.25);
+            animation: slideInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(79, 70, 229, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .subject-detail-section {
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(67, 56, 202, 0.3);
+        }
+        
+        .subject-detail-section.active {
+            display: block;
+        }
+        
+        @keyframes slideInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(60px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .subject-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 4px solid #e2e8f0;
+            position: relative;
+        }
+        
+        .dark-mode .subject-header {
+            border-bottom: 4px solid #334155;
+        }
+        
+        .subject-header::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 4px;
+            background: var(--gradient-1);
+            border-radius: 3px;
+        }
+        
+        .subject-header h2 {
+            font-size: 3.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+            font-weight: 800;
+        }
+        
+        .dark-mode .subject-header h2 {
+            color: #c4b5fd;
+        }
+        
+        .subject-overview {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            padding: 2.5rem;
+            border-radius: 25px;
+            margin-bottom: 3.5rem;
+            border-left: 6px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.1);
+        }
+        
+        .subject-overview::before {
+            content: '""';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .subject-overview h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1.2rem;
+            font-size: 1.7rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+        
+        .dark-mode .subject-overview h3 {
+            color: #c4b5fd;
+        }
+        
+        .subject-overview h3::before {
+            content: '📖';
+            font-size: 2.2rem;
+        }
+        
+        .subject-overview p {
+            color: var(--text-secondary);
+            line-height: 2;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 2.8rem;
+            margin-top: 2.5rem;
+        }
+        
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 3rem 2.2rem;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 6px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+        }
+        
+        .dark-mode .content-card {
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(67, 56, 202, 0.3);
+        }
+        
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-1);
+        }
+        
+        .content-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.25);
+        }
+        
+        .dark-mode .content-card:hover {
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.45);
+        }
+        
+        .content-card h4 {
+            color: var(--primary-dark);
+            margin-bottom: 1.8rem;
+            font-size: 1.8rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .dark-mode .content-card h4 {
+            color: #c4b5fd;
+        }
+        
+        .content-card h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background: var(--gradient-1);
+            border-radius: 3px;
+        }
+        
+        .content-card ul {
+            list-style: none;
+        }
+        
+        .content-card li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+        
+        .dark-mode .content-card li {
+            border-bottom: 1px solid #334155;
+        }
+        
+        .content-card li:last-child {
+            border-bottom: none;
+        }
+        
+        .content-card li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.4rem;
+            min-width: 24px;
+        }
+        
+        .content-card li:hover {
+            color: var(--primary-dark);
+            transform: translateX(8px);
+        }
+        
+        .dark-mode .content-card li:hover {
+            color: #c4b5fd;
+        }
+        
+        /* Lessons Card Specific Styling */
+        .lesson-item {
+            background: #f8fafc;
+            padding: 1.4rem;
+            border-radius: 15px;
+            margin-bottom: 1.2rem;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+        }
+        
+        .dark-mode .lesson-item {
+            background: #334155;
+            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.2);
+        }
+        
+        .lesson-item:hover {
+            background: #f1f5f9;
+            transform: translateX(5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark-mode .lesson-item:hover {
+            background: #475569;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .lesson-title {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.7rem;
+            font-size: 1.2rem;
+        }
+        
+        .dark-mode .lesson-title {
+            color: #c4b5fd;
+        }
+        
+        .lesson-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .lesson-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            background: rgba(79, 70, 229, 0.1);
+        }
+        
+        .lesson-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+            background: rgba(79, 70, 229, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .dark-mode .lesson-link:hover {
+            color: #c4b5fd;
+        }
+        
+        .difficulty {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .difficulty.easy {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            color: #166534;
+        }
+        
+        .dark-mode .difficulty.easy {
+            background: linear-gradient(135deg, #166534, #15803d);
+            color: #bbf7d0;
+        }
+        
+        .difficulty.medium {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #92400e;
+        }
+        
+        .dark-mode .difficulty.medium {
+            background: linear-gradient(135deg, #92400e, #b45309);
+            color: #fde68a;
+        }
+        
+        .difficulty.hard {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+        }
+        
+        .dark-mode .difficulty.hard {
+            background: linear-gradient(135deg, #991b1b, #dc2626);
+            color: #fecaca;
+        }
+        
+        /* Videos Card Specific Styling */
+        .video-item {
+            background: #f0f9ff;
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-5);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.1);
+        }
+        
+        .dark-mode .video-item {
+            background: #334155;
+            box-shadow: 0 4px 12px rgba(8, 145, 178, 0.25);
+        }
+        
+        .video-item:hover {
+            background: #e0f2fe;
+            transform: translateX(3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .dark-mode .video-item:hover {
+            background: #475569;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+        }
+        
+        .video-link {
+            color: var(--accent-5);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            background: rgba(6, 182, 212, 0.1);
+        }
+        
+        .video-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+            background: rgba(6, 182, 212, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .dark-mode .video-link:hover {
+            color: #c4b5fd;
+        }
+        
+        /* Semester Toggle Buttons */
+        .semester-toggle {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .semester-btn {
+            background: var(--card-bg);
+            border: 3px solid var(--primary);
+            color: var(--primary);
+            padding: 0.9rem 2rem;
+            border-radius: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+        }
+        
+        .semester-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+        }
+        
+        .semester-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+        }
+        
+        .semester-content {
+            display: none;
+        }
+        
+        .semester-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .empty-content {
+            text-align: center;
+            color: var(--danger);
+            font-weight: 700;
+            padding: 2.8rem 1.2rem;
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-radius: 20px;
+            border: 3px dashed var(--danger);
+            animation: pulseRed 2s infinite;
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
+        }
+        
+        .dark-mode .empty-content {
+            background: linear-gradient(135deg, #7f1d1d, #991b1b);
+            color: #fecaca;
+            border: 3px dashed #fecaca;
+            box-shadow: 0 8px 20px rgba(153, 27, 27, 0.4);
+        }
+        
+        @keyframes pulseRed {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .empty-content::before {
+            content: '⚠️';
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 1.2rem;
+        }
+        
+        /* Empty Pages */
+        .empty-page {
+            text-align: center;
+            padding: 5.5rem 2.8rem;
+            background: var(--card-bg);
+            border-radius: 30px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+        }
+        
+        .dark-mode .empty-page {
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(67, 56, 202, 0.3);
+        }
+        
+        .empty-page::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .empty-page h2 {
+            color: var(--primary-dark);
+            margin-bottom: 2.5rem;
+            font-size: 2.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        
+        .dark-mode .empty-page h2 {
+            color: #c4b5fd;
+        }
+        
+        .empty-page p {
+            color: var(--text-secondary);
+            margin-bottom: 2.8rem;
+            font-size: 1.3rem;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--secondary), #1e293b);
+            color: white;
+            padding: 4rem 0 3rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dark-mode footer {
+            background: linear-gradient(135deg, #020617, #0f172a);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .footer-content p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            line-height: 2;
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.3rem;
+            }
+            
+            .target-audience {
+                grid-template-columns: 1fr;
+                gap: 1.8rem;
+            }
+            
+            .years-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .year-number {
+                font-size: 4rem;
+            }
+            
+            nav ul {
+                gap: 1.2rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2.2rem;
+            }
+            
+            .subject-header h2 {
+                font-size: 2.6rem;
+            }
+            
+            .lesson-details {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .content-card {
+                padding: 2.5rem 1.8rem;
+            }
+            
+            .header-content {
+                flex-wrap: wrap;
+                gap: 1.2rem;
+            }
+            
+            .theme-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .semester-toggle {
+                flex-direction: column;
+            }
+            
+            .semester-btn {
+                min-width: auto;
+            }
+            
+            .visitor-count {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2.4rem;
+            }
+            
+            .year-number {
+                font-size: 3.5rem;
+            }
+            
+            .year-title {
+                font-size: 1.5rem;
+            }
+            
+            .subject-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .content-card {
+                padding: 2.2rem 1.5rem;
+            }
+            
+            .empty-page {
+                padding: 4.5rem 2rem;
+            }
+            
+            .special-note {
+                padding: 2.2rem 1.8rem;
+            }
+            
+            .special-note p {
+                font-size: 1.25rem;
+            }
+            
+            .lesson-item {
+                padding: 1.1rem;
+            }
+            
+            .video-item {
+                padding: 0.9rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.9rem;
+            }
+            
+            nav a {
+                padding: 0.7rem 1.2rem;
+                font-size: 1rem;
+            }
+            
+            .visitor-count {
+                font-size: 2.4rem;
+            }
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            background: var(--gradient-1);
+            color: white;
+            padding: 1.1rem 2.5rem;
+            border-radius: 18px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+            font-weight: 800;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.6);
+            background: var(--gradient-2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span>⚕️</span>
+                <span>The Smart Med Student</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1.2rem;">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <nav>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">الرئيسية</a></li>
+                        <li><a href="#" onclick="showPage('years')">السنوات الدراسية</a></li>
+                        <li><a href="#" onclick="showPage('study_map')">خريطتك الدراسية</a></li>
+                        <li><a href="#" onclick="showPage('mental_health')">صحتك النفسية</a></li>
+                        <li><a href="#" onclick="showPage('about_us')">من نحن</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="page-header">
+                <h1>مرحباً بك في مساعد طلاب الطب</h1>
+                <p>منصة تعليمية شاملة تهدف إلى تسهيل دراسة المواد الطبية الأساسية من خلال محتوى منظم وسهل الفهم</p>
+            </div>
+            
+            <div class="visitor-counter">
+                <h3>عدد الزوار الحاليين</h3>
+                <div class="visitor-count" id="visitorCount">0</div>
+            </div>
+            
+            <div class="hero-section">
+                <h2 class="hero-title">هذا الموقع مخصص لـ:</h2>
+                
+                <div class="target-audience">
+                    <div class="audience-card">
+                        <div class="audience-icon">👨‍⚕️</div>
+                        <h3 class="audience-title">طلاب الطب</h3>
+                        <p class="audience-desc">(خصوصًا السنوات الأولى)</p>
+                    </div>
+                    
+                    <div class="audience-card">
+                        <div class="audience-icon">📚</div>
+                        <h3 class="audience-title">من يعانون من كثرة المصادر</h3>
+                        <p class="audience-desc">ولا يعرفون من أين يبدأون</p>
+                    </div>
+                    
+                    <div class="audience-card">
+                        <div class="audience-icon">📉</div>
+                        <h3 class="audience-title">من يدرسون كثيرًا</h3>
+                        <p class="audience-desc">لكن نتائجهم ضعيفة</p>
+                    </div>
+                    
+                    <div class="audience-card">
+                        <div class="audience-icon">😴</div>
+                        <h3 class="audience-title">من يشعرون بالإرهاق أو الضياع</h3>
+                        <p class="audience-desc">في رحلتهم الأكاديمية</p>
+                    </div>
+                </div>
+                
+                <div class="special-note">
+                    <h3>ملاحظة خاصة</h3>
+                    <p>✨ مكتوب بلغة طالب طب، لا بلغة الدكاترة</p>
+                </div>
+                
+                <div style="margin-top: 3.5rem;">
+                    <button class="btn" onclick="showPage('years')" style="font-size: 1.3rem; padding: 1.2rem 2.8rem;">ابدأ رحلتك الآن</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Years Page -->
+        <section id="years" class="page">
+            <div class="page-header">
+                <h1>السنوات الدراسية</h1>
+                <p>دليل شامل للسنتين الأولى والثانية في كلية الطب مع المواد الأساسية والمواضيع الرئيسية</p>
+            </div>
+            
+            <div class="years-grid">
+                <!-- Year 1 -->
+                <div class="year-card">
+                    <div class="year-header">
+                        <div class="year-number">1</div>
+                        <div class="year-title">السنة الأولى</div>
+                    </div>
+                    <div class="year-body">
+                        <h3 style="color: var(--primary-dark); margin-bottom: 1.8rem; text-align: center; font-size: 1.4rem;">المواد الأساسية</h3>
+                        <ul class="subjects-list">
+                            <li onclick="showSubjectDetail('anatomie', 'ANATOMIE', 'هاته المادة هي اساس الطب وتعتبر من احلى المواد واسهلها ان احببتها. صحيح انا كثيفة المعلومات لكنها تحسسك بانك تدرس في مجال الطب. حيث ستدرسون فيها اساسيات الجسم : العظام,العضلات,الاوعية الدموية,الاعصاب,المفاصل . وهاته الاساسيات مقسمة الى طرفين العلوي والسفلي .', {'semester1': [{'title': 'Introduction Anatomique', 'link': 'https://docs.google.com/presentation/d/1rKUV7_jZiNRmHKDwjBlLyC4AF66tF5tb/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'easy'}, {'title': 'Osteologie de MS', 'link': 'https://docs.google.com/presentation/d/1KxxkQfGv7vcCcgK4My8_s-YKX_vv1gFl/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'medium'}, {'title': 'Arthrologie de MS', 'link': 'https://drive.google.com/file/d/1WQZgfFKXFMhtkcaBeir-dM3lttPM6zyH/view?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Myologie de MS', 'link': 'https://drive.google.com/file/d/1jgclrvG1cCyjXwczyWA5ywZCbd0LZEkY/view?usp=drive_link', 'difficulty': 'hard'}, {'title': 'Angiologie de MS', 'link': 'https://drive.google.com/file/d/1IfRBXY3Uyjtc28LGQB9l4ol6Gddc7y95/view?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Neurologie de MS', 'link': 'https://drive.google.com/file/d/1SypSOfHi8hEc2RGyv8c8s2A62N6bx-j2/view?usp=drive_link', 'difficulty': 'hard'}], 'semester2': [{'title': 'Osteologie de MP', 'link': 'https://docs.google.com/presentation/d/1KxxkQfGv7vcCcgK4My8_s-YKX_vv1gFl/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'medium'}, {'title': 'Arthrologie de MP', 'link': 'https://drive.google.com/file/d/1XnJ4UH81cCwmF3v6pflO6ONb8Gvqd9vc/view?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Myologie de MS', 'link': 'https://docs.google.com/presentation/d/1L9-vIIs-xVyKBHoTFC83K570T6tLsouv/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'hard'}, {'title': 'Angiologie de MS', 'link': 'https://drive.google.com/file/d/1IHv3zJ9VG3Wt9RROnElogj6r2O2HjOn_/view?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Neurologie de MS', 'link': 'https://drive.google.com/file/d/1TMvG0TaTqetZFXx_w3lT2A0emqhy8vkq/view?usp=drive_link', 'difficulty': 'medium'}]}, null, ['الرسومات تساعدك كثيرا', 'استخدم تطبيق الاطلس ثلاثي الابعاد', 'حاول ان تتخيل ما تدرسه', 'ابدا بدراستها قبل بقية المواد'], ['أساس جميع التخصصات الطبية', 'ضروري للفهم السريري', 'يساعد في التشخيص الدقيق', 'مهم للإجراءات  الجراحية'])">
+                                <span class="subject-icon">🦴</span> ANATOMIE
+                            </li>
+                            <li onclick="showSubjectDetail('biochimie', 'BIOCHIMIE', 'هاته المادة سهلة وممتعة قليلا تدرسون فيها 3 مركبات : السكريات,البروتينات والليبيدات حيث يتضمن كل مركب بنيتة الجزئية وعملية الايض الخاصة به.', {'semester1': [{'title': 'Les Structures', 'link': 'https://drive.google.com/drive/folders/1C4Y5CKvhk0e6JRieW6tpLdlM_UCepgnE?usp=drive_link', 'difficulty': 'medium'}], 'semester2': [{'title': 'Les Metabolismes', 'link': 'https://drive.google.com/drive/folders/1_iemCqiWvlBICk4qmx7xun4avsu88-We?usp=drive_link', 'difficulty': 'hard'}]}, {'semester1': [{'title': 'Les Glucides', 'link': 'https://youtube.com/playlist?list=PLCkSZi2UeeazSlRMM-ZOMRh96D1w9CPln&si=uOKU14DfjlbWeA9z'}, {'title': 'Les Lipides', 'link': 'https://youtube.com/playlist?list=PLCkSZi2UeeaxwmnFn3hjIfyLTMx_acYqo&si=QCRumIWbyqpKETNC'}, {'title': 'Les Proteines', 'link': 'https://youtube.com/playlist?list=PLCkSZi2UeeayYbxsZKTTfpqfcul7wyl7c&si=jxMM7SluCjpPVFA0'}], 'semester2': []}, ['لا تخف هاته المادة تصبح سهلة وممتعة وطبية لابعد درجة في السنة الثانية', 'استخدم المخططات التوضيحية', 'اعتمد الفهم قبل الحفظ خصوصا الفصل الثاني', 'لا تتجاهلو الانزيمات في الفصل الثاني لانها اهم شيئ'], ['فهم أساس الأمراض الوراثية', 'تفسير اختبارات الدم', 'فهم آليات الأدوية', 'أساس الطب الجزيئي'])">
+                                <span class="subject-icon">🧪</span> BIOCHIMIE
+                            </li>
+                            <li onclick="showSubjectDetail('cytologie', 'CYTOLOGIE', 'المادة الجميلة الرائعة التي تذهب بك الى داخل الخلية ,مادة سهلة ليست معقدة ومهمة جدا كاهمية الاناتومي.', {'semester1': [{'title': 'Organisation cellulaire', 'link': 'https://drive.google.com/file/d/1DKrk6yxoY_Ei94WTF8p0-Nf_tUUrm_j8/view?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Les Methodes', 'link': 'https://drive.google.com/file/d/1tXo1PdSlrcX9UoB4FLEeJ4-NRVjePzhp/view?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Transports', 'link': 'https://drive.google.com/file/d/1O5ySEupqa47QQDFn_6mKkqSeveOcZNRV/view?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Membeane Plasmique', 'link': 'https://drive.google.com/file/d/1IRnz_FMpT3xapUnhhI8Bf-Vj2S16Kwi7/view?usp=drive_link', 'difficulty': 'easy'}], 'semester2': [{'title': 'cytosquelette', 'link': 'https://docs.google.com/presentation/d/1lZn6fJKvW64Kg1t7UHydxekE16yDrnAL/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'easy'}, {'title': 'Endomembranaire', 'link': 'https://docs.google.com/presentation/d/147GRcFACTKX1VeWVwE05ml2i1bsGuFcy/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'easy'}, {'title': 'Hyaloplasme', 'link': 'https://drive.google.com/file/d/1KHbWTUQJa1v4U5ulOCnR7-JYVE4n_27d/view?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Les Organites', 'link': 'https://drive.google.com/drive/folders/1QdfDftHr8iKINuNJMIN2Av3PNczsY2ji?usp=drive_link', 'difficulty': 'hard'}]}, {'semester1': [{'title': 'Cours', 'link': 'https://youtube.com/playlist?list=PLgt70N0N-2-1oV2jgobbWVNrYbwpA7zE6&si=XURisgLAR-5f4aKK'}], 'semester2': [{'title': 'Cytosquelette et Hyaloplasm', 'link': 'https://youtu.be/6ZYjQBK68Bw?si=u13BkB0OqJE1d0X6'}, {'title': 'Endoo', 'link': 'https://youtu.be/T-PeJ29z1z0?si=aNzvh_bBz_U1ipLy'}]}, ['الفصل الاول اسهل قليلا من الثاني فركز جبدا فيها', 'انصحك بالحل بعد الانتهاء من الدرس', 'كررها اكثر من مرتين لانها سهلة النسيان', 'كرر الرسوم التوضيحية'], ['فهم التغيرات المرضية', 'أساس علم الأمراض', 'تفسير النتائج المخبرية', 'فهم الاستجابات المناعية'])">
+                                <span class="subject-icon">🔬</span> CYTOLOGIE
+                            </li>
+                            <li onclick="showSubjectDetail('physiologie', 'PHYSIOLOGIE', 'هنا الاساس الثاني وهو علم الوظائف حيث انها مدخل فقط والباقي ياتي مرورا بالسنوات تدرسون فيها الاساسيات', {'semester2': [{'title': 'Cours', 'link': 'https://drive.google.com/drive/folders/1_ZVvnJhRvjFB4byK4tLwxRF_XLcbDzvB?usp=drive_link', 'difficulty': 'hard'}]}, {'semester2': [{'title': 'Playliste', 'link': 'https://youtube.com/playlist?list=PLK4UNCL4RZYqTW-Yu4xCL9T8_W-rrN8V8&si=cr6j0x0WIHNNjrxt'}]}, ['مهمة كثيرا في السنة الثانية', 'اعتمد على اليوتيوب 50 بالمئة', 'تحتاج الفهم قبل الحفظ', 'حل الكثير من الأسئلة التطبيقية'], ['فهم الأساس الفسيولوجي للأمراض', 'تفسير نتائج التحاليل', 'فهم آليات عمل الأدوية', 'الأساس للطب السريري'])">
+                                <span class="subject-icon">❤️</span> PHYSIOLOGIE
+                            </li>
+                            <li onclick="showSubjectDetail('biophysique', 'BIOPHYSIQUE', 'اسمط مادة في الطب تدرس اشياء لا حول ولا قوة الا بالله لكن الفصل الثاني سهل جدا وتدرسون على شيئ طبي الا وهو العين .', {'semester1': [{'title': 'Elctrooo', 'link': 'https://drive.google.com/drive/folders/1CACmLUtv2k1SAW9BSnuuhQ0Vvqa3UUNl?usp=drive_link', 'difficulty': 'hard'}], 'semester2': [{'title': 'Les Yeux', 'link': 'https://drive.google.com/drive/folders/1_qRmAeoEG0IojG7Xe8X8DcLgx76NOkds?usp=drive_link', 'difficulty': 'easy'}]}, {'semester1': [{'title': 'Elctroo', 'link': 'https://youtube.com/playlist?list=PLvhLrq3xUh-fI7g1pEU8ojMAdH6rDUJh6&si=HjnCPMtVQpH0LtN4'}, {'title': 'Solutions', 'link': 'https://youtube.com/playlist?list=PL6z25hk70QWwooWaK_Gf3U4C3LGUyhA3b&si=IeGBiXrLOSDNzqGY'}], 'semester2': [{'title': 'Optique', 'link': 'https://www.youtube.com/playlist?list=PLvhLrq3xUh-frxnqDvto3WsLUQSw4xmij'}]}, ['ستتعبك يا صديقي لكنها سهلة في السنة الثانية لاتخف', 'اعتمد على اليوتيوب بشكل كبير', 'اعتمد على شات جيبيتي كثيرا', 'حل المسائل التطبيقية بكثرة بكثرة'], ['فهم الأجهزة الطبية', 'تفسير القياسات الفيزيائية', 'أساس التصوير الطبي', 'فهم الآليات الفيزيائية للأمراض'])">
+                                <span class="subject-icon">⚡</span> BIOPHYSIQUE
+                            </li>
+                            <li onclick="showSubjectDetail('biostat', 'BIOSTAT', 'لا اعلم لماذا هي ضمن مواد الطب لكن تحملها فقط لانك لن تراها مجددا ابدا, لكنها سهلة ةتساعدك في رفع معدلك السنوي .', {'semester1': [{'title': 'Cours', 'link': 'https://drive.google.com/drive/folders/1C9X0D03QuRhBlOZ8nfswhHm5nw8mAMSj?usp=drive_link', 'difficulty': 'medium'}], 'semester2': [{'title': 'Cours', 'link': 'https://drive.google.com/drive/folders/1_q7eLd3-2OMKALRFhROGanTHVPNlCGNm?usp=drive_link', 'difficulty': 'medium'}]}, {'semester1': [{'title': 'STATISTIQUE', 'link': 'https://youtube.com/playlist?list=PLTuuQN_bAwZ4bUuYceiDHUELLU_u6UsyS&si=zXtWUm9Z2F5WjyWT'}, {'title': 'الاحتمالات', 'link': 'https://youtube.com/playlist?list=PLlaFpJcuzvllMcU6DLqNr-7s2HxeplpC3&si=Wa1F5GN-hlvGqIhH'}], 'semester2': []}, ['تدرب على برامج التحليل', 'افهم المفاهيم الأساسية', 'حل الكثير من المسائل', 'تعلم تفسير النتائج'], ['تحليل الأبحاث العلمية', 'تصميم الدراسات', 'تفسير النتائج السريرية', 'اتخاذ القرارات المبنية على الأدلة'])">
+                                <span class="subject-icon">📊</span> BIOSTAT
+                            </li>
+                            <li onclick="showSubjectDetail('ssh', 'SSH', 'دراسة العوامل الاجتماعية والسلوكية التي تؤثر على الصحة والمرض، وعلاقة الطبيب بالمريض والمجتمع. وكذلك تحمي حقوقك الطبية .', {'semester1': [{'title': 'Cours', 'link': 'https://drive.google.com/drive/folders/1CSSN_5C27yTZjznP9w7g1yVEWtA4jLd1?usp=drive_link', 'difficulty': 'hard'}]}, {'semester1': [], 'semester2': []}, ['ضمن المواد التي لن تلتقي بهم ابدا', 'تستطيع تاجيلها ودراستها عند اقتراب الامتحان', 'اعتمد على اليوتيوب بشكل نهائي', 'افهم المفاهيم واحفظها'], ['فهم العوامل الاجتماعية للأمراض', 'تحسين العلاقة مع المرضى', 'اتخاذ قرارات أخلاقية', 'العمل ضمن الفريق الصحي'])">
+                                <span class="subject-icon">👥</span> SSH
+                            </li>
+                            <li onclick="showSubjectDetail('embryologie', 'EMBRYOLOGIE', 'تتمحور حول تطور الجنين من الاخصاب الى الاسبوع الرابع من التطور الجنيني, المادة معقدة قليلا ومهمة كثيرا لكن الفيديوهات التي وضعتها لكم تساعدكم بشكل كبير جدا .', {'semester1': [{'title': 'Cours', 'link': 'https://drive.google.com/drive/folders/1CR7rYcjoJ_BWVZHST3RSoA5GhNSoOMFi?usp=drive_link', 'difficulty': 'hard'}]}, {'semester1': [{'title': 'Playlist', 'link': 'https://youtube.com/playlist?list=PLB3gueQInnKkrl8iQ24xszSHvvrGsz3Ud&si=msutfOyr58ir1j1v'}], 'semester2': []}, ['تابع مراحل التطور بالتسلسل', 'استخدم الرسوم المتحركة كثيرا', 'افهم المصطلحات قبل ما تحفظها', 'ركز على النقاط الحرجة والايام كثيرا'], ['فهم التشوهات الخلقية', 'أساس علم الوراثة', 'تفسير الحالات السريرية', 'مهم لطب النساء والتوليد'])">
+                                <span class="subject-icon">👶</span> EMBRYOLOGIE
+                            </li>
+                            <li onclick="showSubjectDetail('chimie', 'CHIMIE', 'من المواد التي ليست مهمة في الطب واراها كاضافة لرفع المعدل تدرسون حول الذرة والجزيئ في الفصل الثاني تصبح سهلة وممتعة وتميل قليلا الى الطب', {'semester1': [{'title': 'Cours 1', 'link': 'https://drive.google.com/file/d/1tLpi4wLbj_uTIMtRHE7DMM3K3s-gPPec/view?usp=drive_link', 'difficulty': 'medium'}], 'semester2': [{'title': 'Solution', 'link': 'https://docs.google.com/presentation/d/1XNBnClwKTSMqafRPB2Jd2Xq0P1m1WNU7/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'medium'}, {'title': 'Organique', 'link': 'https://docs.google.com/presentation/d/1RnAT6fooUe6CMJPzpRi3mG4dRHZy7l5F/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'easy'}, {'title': 'Stereochemique', 'link': 'https://docs.google.com/presentation/d/1wed_9uAeHJ8ypWPIv_GmZxFv-q1AnOhJ/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'medium'}, {'title': 'cenitique', 'link': 'https://docs.google.com/presentation/d/1NMN026bORuW4COUX0pOF7EgqNH4GgXTL/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'medium'}]}, {'semester1': [{'title': 'Playlist', 'link': 'https://youtube.com/playlist?list=PLgWzWDJ5fcXkXT1028nVW4HaAJXyjHOEH&si=B8bf8X_WOaPJDgXw'}, {'title': 'Playlist 2', 'link': 'https://youtube.com/playlist?list=PLgWzWDJ5fcXmijtRkLeBAbUY5QTr0gX7c&si=lwB8WzdFhocHgOws'}, {'title': 'Playlist 3', 'link': 'https://youtube.com/playlist?list=PLvYKeChoC24A6jhqboAovvktPsqLNlXx1&si=OR1IsEbrdS6F5DNX'}], 'semester2': [{'title': 'Playlist', 'link': 'https://youtube.com/playlist?list=PLkpUyH10WPwV578GrSfc0WvLjYCLgQgnE&si=DzYSja3PmwnEEewO'}]}, ['افهم الأساس النظري', 'حل التمارين التطبيقية', 'اربط بين الكيمياء والطب', 'استخدم النماذج الجزيئية'], ['أساس الكيمياء الحيوية', 'فهم تفاعلات الأدوية', 'تفسير نتائج المختبر', 'التحضير للصيدلة'])">
+                                <span class="subject-icon">⚗️</span> CHIMIE
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Year 2 - Kept exactly as it was before but without videos -->
+                <div class="year-card">
+                    <div class="year-header">
+                        <div class="year-number">2</div>
+                        <div class="year-title">السنة الثانية</div>
+                    </div>
+                    <div class="year-body">
+                        <h3 style="color: var(--primary-dark); margin-bottom: 1.8rem; text-align: center; font-size: 1.4rem;">المواد الأساسية</h3>
+                        <ul class="subjects-list">
+                            <li onclick="showSubjectDetail('cardiovasculaire', 'CARDIOVASCULAIRE', 'دراسة الجهاز القلبي الوعائي، تركيبه، وظائفه، والأمراض التي تصيبه.', [{'title': 'Anatomique', 'link': 'https://drive.google.com/drive/folders/1m1IJPo2yc4djXSk1RpJ4hi9smO7C8HQk?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Physiologie', 'link': 'https://drive.google.com/drive/folders/1tQ0YGtfyr3XUwmzaCQnKrURc2tVbgVjy?usp=drive_link', 'difficulty': 'hard'}, {'title': 'Biophysique', 'link': 'https://drive.google.com/drive/folders/1aiNVOxcXpJcc0CSrmwyOLVniw7__SLH2?usp=drive_link', 'difficulty': 'hard'}, {'title': 'Histologie', 'link': 'https://drive.google.com/drive/folders/17DDAtsFF12asjfpfEenvUVGtm_rMvfSo?usp=drive_link', 'difficulty': 'medium'}], null, ['استخدم الرسوم التوضيحية', 'ادرس الحالات السريرية', 'افهم الآليات الفسيولوجية', 'ربط بين التشريح والوظيفة'], ['أساس أمراض القلب', 'فهم ضغط الدم', 'تفسير تخطيط القلب', 'التعامل مع الطوارئ القلبية'])">
+                                <span class="subject-icon">🫀</span> CARDIOVASCULAIRE
+                            </li>
+                            <li onclick="showSubjectDetail('nerveux', 'NERVEUX', 'دراسة الجهاز العصبي، تركيبه، وظائفه، والاضطرابات التي تصيبه.', [], null, [], [])">
+                                <span class="subject-icon">🧠</span> NERVEUX
+                            </li>
+                            <li onclick="showSubjectDetail('digestif', 'DIGESTIF', 'دراسة الجهاز الهضمي، تركيبه، وظائفه، والأمراض التي تصيبه.', [{'title': 'Anatomie', 'link': 'https://drive.google.com/drive/folders/1OkXTN5dgbLo3oVluQo98r_e4h42-s4Ej?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Biochimie', 'link': 'https://drive.google.com/drive/folders/1Qrkno1LCVGC07MRYyAZSITm00VwP-uKL?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Histologie', 'link': 'https://drive.google.com/drive/folders/1-awFn-UtHWTtFOuzEUIoQyd-lWu1IdXs?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Physiologie', 'link': 'https://drive.google.com/drive/folders/1fYSS4ZvCUk-t7KBBpR78rk8aMj5rs0Hc?usp=drive_link', 'difficulty': 'medium'}], null, ['استخدم الرسوم التوضيحية', 'ادرس الحالات السريرية', 'افهم الآليات الفسيولوجية', 'ربط بين الأعضاء المختلفة'], ['تشخيص الأمراض الهضمية', 'فهم سوء الامتصاص', 'التخطيط العلاجي', 'الوقاية من الأمراض'])">
+                                <span class="subject-icon">🍽️</span> DIGESTIF
+                            </li>
+                            <li onclick="showSubjectDetail('endocrineien', 'ENDOCRINEIEN', 'دراسة الغدد الصماء، الهرمونات التي تفرزها، وتأثيراتها على الجسم.', [], null, [], [])">
+                                <span class="subject-icon">⚖️</span> ENDOCRINEIEN
+                            </li>
+                            <li onclick="showSubjectDetail('urinaire', 'URINAIRE', 'دراسة الجهاز البولي، تركيبه، وظائفه، والأمراض التي تصيبه.', [{'title': 'Anatomie', 'link': 'https://drive.google.com/drive/folders/1-6vSXjW0CMAylAoX3aeC0CIj8-Wsx66M?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Biochimie', 'link': 'https://drive.google.com/drive/folders/1H9s1QAiTS8uzSj8wKci0997AaC6oCaYD?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Histologie', 'link': 'https://drive.google.com/drive/folders/1Ki6ok-KJ1CqV6w9oLgx5K-pB6XRHDmKL?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Physiologie', 'link': 'https://drive.google.com/drive/folders/1aJ2hBJ5rgT0ZfL0hTlpLZ3ycZIPECBf2?usp=drive_link', 'difficulty': 'medium'}], null, ['استخدم الرسوم التوضيحية', 'ادرس الحالات السريرية', 'افهم الآليات الفسيولوجية', 'ربط بين التركيب والوظيفة'], ['تشخيص أمراض الكلى', 'فهم الفشل الكلوي', 'التخطيط العلاجي', 'الوقاية من الحصوات'])">
+                                <span class="subject-icon">💧</span> URINAIRE
+                            </li>
+                            <li onclick="showSubjectDetail('genetique', 'GENETIQUE', 'دراسة الوراثة، الجينات، والاضطرابات الوراثية التي تصيب الإنسان.', [], null, [], [])">
+                                <span class="subject-icon">🧬</span> GENETIQUE
+                            </li>
+                            <li onclick="showSubjectDetail('immunologie', 'IMMUNOLOGIE', 'دراسة جهاز المناعة والدفاعات الطبيعية للجسم ضد العوامل الممرضة والخلايا غير الطبيعية.', [], null, [], [])">
+                                <span class="subject-icon">🛡️</span> IMMUNOLOGIE
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Subject Detail Section -->
+            <div id="subjectDetailSection" class="subject-detail-section">
+                <div class="subject-header">
+                    <h2 id="subjectTitle">عنوان المادة</h2>
+                </div>
+                
+                <div class="subject-overview">
+                    <h3>نبذة عن المادة</h3>
+                    <p id="subjectOverview">وصف المادة سيظهر هنا...</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>الدروس</h4>
+                        <div id="lessonsContent">
+                            <!-- Lessons will be populated here with link and difficulty -->
+                        </div>
+                    </div>
+                    
+                    <div class="content-card" id="videosCard">
+                        <h4>الفيديوهات</h4>
+                        <div id="videosContent">
+                            <!-- Videos will be populated here with video link -->
+                        </div>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h4>طريقة المذاكرة</h4>
+                        <ul id="studyMethodsList">
+                            <!-- Study methods will be populated here -->
+                        </ul>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h4>أهمية المادة</h4>
+                        <ul id="importanceList">
+                            <!-- Importance points will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Map Page -->
+        <section id="study_map" class="page">
+            <div class="page-header">
+                <h1>خريطتك الدراسية</h1>
+                <p>أدوات ونصائح لتنظيم جدولك الدراسي وتحقيق أقصى استفادة من وقتك</p>
+            </div>
+            <div class="empty-page">
+                <h2>سيتم إضافة المحتوى قريبًا</h2>
+                <p>نحن نعمل على تطوير أدوات مبتكرة لمساعدتك في تنظيم دراستك وتخطيط جدولك الزمني بشكل فعال.</p>
+                <button class="btn" onclick="showPage('home')" style="margin-top: 2rem;">العودة إلى الرئيسية</button>
+            </div>
+        </section>
+
+        <!-- Mental Health Page -->
+        <section id="mental_health" class="page">
+            <div class="page-header">
+                <h1>صحتك النفسية</h1>
+                <p>دعم نفسي للطلاب خلال سنوات الدراسة المكثفة</p>
+            </div>
+            <div class="empty-page">
+                <h2>سيتم إضافة المحتوى قريبًا</h2>
+                <p>نحن ندرك التحديات النفسية التي يواجهها طلاب الطب، ونعمل على توفير موارد ودعم نفسي متخصص لمساعدتك في الحفاظ على توازنك النفسي.</p>
+                <button class="btn" onclick="showPage('home')" style="margin-top: 2rem;">العودة إلى الرئيسية</button>
+            </div>
+        </section>
+
+        <!-- About Us Page -->
+        <section id="about_us" class="page">
+            <div class="page-header">
+                <h1>من نحن</h1>
+                <p>تعرف على فريق مساعد طلاب الطب ورؤيتنا للمستقبل</p>
+            </div>
+            <div class="empty-page">
+                <h2>سيتم إضافة المحتوى قريبًا</h2>
+                <p>نحن فريق من الأطباء والطلاب المتفانين في تقديم أفضل الموارد التعليمية لدعم زملائنا الطلاب في رحلتهم الأكاديمية.</p>
+                <button class="btn" onclick="showPage('home')" style="margin-top: 2rem;">العودة إلى الرئيسية</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 مساعد طلاب الطب - جميع الحقوق محفوظة</p>
+            <p>منصة تعليمية غير ربحية مخصصة لطلاب كليات الطب</p>
+        </div>
+    </footer>
+
+    <script>
+        // Visitor counter functionality
+        let visitorCount = localStorage.getItem('visitorCount') || 0;
+        const maxVisitors = 99999;
+        
+        // Increment visitor count
+        function incrementVisitorCount() {
+            if (visitorCount < maxVisitors) {
+                visitorCount = parseInt(visitorCount) + 1;
+                localStorage.setItem('visitorCount', visitorCount);
+                updateVisitorDisplay();
+            }
+        }
+        
+        // Update visitor display
+        function updateVisitorDisplay() {
+            const visitorElement = document.getElementById('visitorCount');
+            if (visitorElement) {
+                visitorElement.textContent = visitorCount.toLocaleString('ar-SA');
+            }
+        }
+        
+        // Initialize visitor counter
+        updateVisitorDisplay();
+        incrementVisitorCount();
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        // Check for saved theme preference or respect OS preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        } else {
+            themeToggle.textContent = '🌙';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Show specific page function
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Hide subject detail section
+            document.getElementById('subjectDetailSection').classList.remove('active');
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update URL hash for bookmarking
+            window.location.hash = pageId;
+        }
+        
+        // Switch semester function
+        function switchSemester(contentType, semester) {
+            // Update button states
+            const buttons = document.querySelectorAll(`.${contentType}-toggle .semester-btn`);
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show selected semester content
+            const semesterContents = document.querySelectorAll(`#${contentType}Content .semester-content`);
+            semesterContents.forEach(content => content.classList.remove('active'));
+            document.getElementById(`${contentType}-${semester}`).classList.add('active');
+        }
+        
+        // Show subject detail function
+        function showSubjectDetail(subjectId, title, overview, lessons, videos, studyMethods, importance) {
+            // Set the content
+            document.getElementById('subjectTitle').textContent = title;
+            document.getElementById('subjectOverview').textContent = overview;
+            
+            // Check if it's a first year subject (has semester structure)
+            const isFirstYear = ['anatomie', 'biochimie', 'cytologie', 'physiologie', 'biophysique', 'biostat', 'ssh', 'embryologie', 'chimie'].includes(subjectId);
+            
+            // Handle lessons
+            if (isFirstYear) {
+                // Create semester toggle for lessons
+                const lessonsContent = document.getElementById('lessonsContent');
+                lessonsContent.innerHTML = `
+                    <div class="semester-toggle lessons-toggle">
+                        <button class="semester-btn active" onclick="switchSemester('lessons', 'semester1')">الفصل الأول</button>
+                        <button class="semester-btn" onclick="switchSemester('lessons', 'semester2')">الفصل الثاني</button>
+                    </div>
+                    <div id="lessons-semester1" class="semester-content active"></div>
+                    <div id="lessons-semester2" class="semester-content"></div>
+                `;
+                
+                // Populate lessons with semester structure
+                const lessonsSemester1 = document.getElementById('lessons-semester1');
+                const lessonsSemester2 = document.getElementById('lessons-semester2');
+                lessonsSemester1.innerHTML = '';
+                lessonsSemester2.innerHTML = '';
+                
+                if (lessons.semester1 && lessons.semester1.length > 0) {
+                    lessons.semester1.forEach(lesson => {
+                        const lessonDiv = document.createElement('div');
+                        lessonDiv.className = 'lesson-item';
+                        
+                        let difficultyClass = 'medium';
+                        if (lesson.difficulty === 'easy') difficultyClass = 'easy';
+                        else if (lesson.difficulty === 'hard') difficultyClass = 'hard';
+                        
+                        // Create actual link element that opens in new tab
+                        lessonDiv.innerHTML = `
+                            <div class="lesson-title">${lesson.title}</div>
+                            <div class="lesson-details">
+                                <a href="${lesson.link}" class="lesson-link" target="_blank" rel="noopener noreferrer">رابط الدرس</a>
+                                <span class="difficulty ${difficultyClass}">
+                                    ${lesson.difficulty === 'easy' ? 'سهل' : lesson.difficulty === 'medium' ? 'متوسط' : 'صعب'}
+                                </span>
+                            </div>
+                        `;
+                        lessonsSemester1.appendChild(lessonDiv);
+                    });
+                } else {
+                    lessonsSemester1.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                }
+                
+                if (lessons.semester2 && lessons.semester2.length > 0) {
+                    lessons.semester2.forEach(lesson => {
+                        const lessonDiv = document.createElement('div');
+                        lessonDiv.className = 'lesson-item';
+                        
+                        let difficultyClass = 'medium';
+                        if (lesson.difficulty === 'easy') difficultyClass = 'easy';
+                        else if (lesson.difficulty === 'hard') difficultyClass = 'hard';
+                        
+                        // Create actual link element that opens in new tab
+                        lessonDiv.innerHTML = `
+                            <div class="lesson-title">${lesson.title}</div>
+                            <div class="lesson-details">
+                                <a href="${lesson.link}" class="lesson-link" target="_blank" rel="noopener noreferrer">رابط الدرس</a>
+                                <span class="difficulty ${difficultyClass}">
+                                    ${lesson.difficulty === 'easy' ? 'سهل' : lesson.difficulty === 'medium' ? 'متوسط' : 'صعب'}
+                                </span>
+                            </div>
+                        `;
+                        lessonsSemester2.appendChild(lessonDiv);
+                    });
+                } else {
+                    lessonsSemester2.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                }
+            } else {
+                // For second year subjects (no semester structure) - keep original format
+                const lessonsContent = document.getElementById('lessonsContent');
+                lessonsContent.innerHTML = '';
+                
+                if (lessons.length > 0) {
+                    lessons.forEach(lesson => {
+                        const lessonDiv = document.createElement('div');
+                        lessonDiv.className = 'lesson-item';
+                        
+                        let difficultyClass = 'medium';
+                        if (lesson.difficulty === 'easy') difficultyClass = 'easy';
+                        else if (lesson.difficulty === 'hard') difficultyClass = 'hard';
+                        
+                        // Create actual link element that opens in new tab
+                        lessonDiv.innerHTML = `
+                            <div class="lesson-title">${lesson.title}</div>
+                            <div class="lesson-details">
+                                <a href="${lesson.link}" class="lesson-link" target="_blank" rel="noopener noreferrer">رابط الدرس</a>
+                                <span class="difficulty ${difficultyClass}">
+                                    ${lesson.difficulty === 'easy' ? 'سهل' : lesson.difficulty === 'medium' ? 'متوسط' : 'صعب'}
+                                </span>
+                            </div>
+                        `;
+                        lessonsContent.appendChild(lessonDiv);
+                    });
+                } else {
+                    lessonsContent.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                }
+            }
+            
+            // Handle videos - hide videos card if videos is null
+            const videosCard = document.getElementById('videosCard');
+            const videosContent = document.getElementById('videosContent');
+            
+            if (videos === null) {
+                // Hide the entire videos card
+                videosCard.style.display = 'none';
+            } else {
+                // Show the videos card
+                videosCard.style.display = 'block';
+                
+                if (isFirstYear) {
+                    // Create semester toggle for videos
+                    videosContent.innerHTML = `
+                        <div class="semester-toggle videos-toggle">
+                            <button class="semester-btn active" onclick="switchSemester('videos', 'semester1')">الفصل الأول</button>
+                            <button class="semester-btn" onclick="switchSemester('videos', 'semester2')">الفصل الثاني</button>
+                        </div>
+                        <div id="videos-semester1" class="semester-content active"></div>
+                        <div id="videos-semester2" class="semester-content"></div>
+                    `;
+                    
+                    // Populate videos with semester structure
+                    const videosSemester1 = document.getElementById('videos-semester1');
+                    const videosSemester2 = document.getElementById('videos-semester2');
+                    videosSemester1.innerHTML = '';
+                    videosSemester2.innerHTML = '';
+                    
+                    if (videos.semester1 && videos.semester1.length > 0) {
+                        videos.semester1.forEach(video => {
+                            const videoDiv = document.createElement('div');
+                            videoDiv.className = 'video-item';
+                            // Create actual link element that opens in new tab
+                            videoDiv.innerHTML = `
+                                <a href="${video.link}" class="video-link" target="_blank" rel="noopener noreferrer">
+                                    📹 ${video.title}
+                                </a>
+                            `;
+                            videosSemester1.appendChild(videoDiv);
+                        });
+                    } else {
+                        videosSemester1.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                    }
+                    
+                    if (videos.semester2 && videos.semester2.length > 0) {
+                        videos.semester2.forEach(video => {
+                            const videoDiv = document.createElement('div');
+                            videoDiv.className = 'video-item';
+                            // Create actual link element that opens in new tab
+                            videoDiv.innerHTML = `
+                                <a href="${video.link}" class="video-link" target="_blank" rel="noopener noreferrer">
+                                    📹 ${video.title}
+                                </a>
+                            `;
+                            videosSemester2.appendChild(videoDiv);
+                        });
+                    } else {
+                        videosSemester2.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                    }
+                } else {
+                    // This case shouldn't happen since second year has videos = null
+                    videosContent.innerHTML = '';
+                    if (videos.length > 0) {
+                        videos.forEach(video => {
+                            const videoDiv = document.createElement('div');
+                            videoDiv.className = 'video-item';
+                            // Create actual link element that opens in new tab
+                            videoDiv.innerHTML = `
+                                <a href="${video.link}" class="video-link" target="_blank" rel="noopener noreferrer">
+                                    📹 ${video.title}
+                                </a>
+                            `;
+                            videosContent.appendChild(videoDiv);
+                        });
+                    } else {
+                        videosContent.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                    }
+                }
+            }
+            
+            // Populate study methods
+            const studyMethodsList = document.getElementById('studyMethodsList');
+            studyMethodsList.innerHTML = '';
+            studyMethods.forEach(method => {
+                const li = document.createElement('li');
+                li.textContent = method;
+                studyMethodsList.appendChild(li);
+            });
+            
+            // Populate importance
+            const importanceList = document.getElementById('importanceList');
+            importanceList.innerHTML = '';
+            importance.forEach(point => {
+                const li = document.createElement('li');
+                li.textContent = point;
+                importanceList.appendChild(li);
+            });
+            
+            // Show the subject detail section with smooth scroll
+            const subjectSection = document.getElementById('subjectDetailSection');
+            subjectSection.classList.add('active');
+            
+            // Scroll to the section
+            subjectSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // Handle page navigation on load
+        window.addEventListener('load', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showPage(hash);
+            }
+        });
+        
+        // Add hover effects to year cards
+        document.querySelectorAll('.year-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) rotateX(5deg)';
+                this.style.boxShadow = '0 35px 70px -15px rgba(0, 0, 0, 0.3)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotateX(0)';
+                this.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.2)';
+            });
+        });
+        
+        // Button hover effects
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-6px) scale(1.05)';
+                this.style.boxShadow = '0 12px 35px rgba(139, 92, 246, 0.6)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 8px 25px rgba(139, 92, 246, 0.4)';
+            });
+        });
+        
+        // Subject list item hover effects
+        document.querySelectorAll('.subjects-list li').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.color = '#4338ca';
+                this.style.transform = 'translateX(10px)';
+                this.style.background = '#f8fafc';
+                this.style.paddingLeft = '1.5rem';
+                this.style.boxShadow = '0 4px 12px rgba(79, 70, 229, 0.15)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.color = '';
+                this.style.transform = 'translateX(0)';
+                this.style.background = '';
+                this.style.paddingLeft = '';
+                this.style.boxShadow = 'none';
+            });
+        });
+        
+        // Mobile menu toggle for smaller screens
+        const nav = document.querySelector('nav');
+        const navToggle = document.createElement('button');
+        navToggle.className = 'nav-toggle';
+        navToggle.innerHTML = '☰';
+        navToggle.style.display = 'none';
+        navToggle.style.background = 'rgba(255, 255, 255, 0.2)';
+        navToggle.style.border = 'none';
+        navToggle.style.color = 'white';
+        navToggle.style.fontSize = '1.6rem';
+        navToggle.style.padding = '0.6rem 1.2rem';
+        navToggle.style.borderRadius = '10px';
+        navToggle.style.cursor = 'pointer';
+        navToggle.style.marginRight = '1.2rem';
+        navToggle.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+        
+        navToggle.addEventListener('click', () => {
+            const navUl = nav.querySelector('ul');
+            navUl.style.display = navUl.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // Add mobile menu toggle on small screens
+        function checkScreenSize() {
+            const navUl = nav.querySelector('ul');
+            if (window.innerWidth <= 768) {
+                if (!nav.contains(navToggle)) {
+                    nav.parentNode.insertBefore(navToggle, nav);
+                }
+                navUl.style.display = 'none';
+            } else {
+                if (nav.contains(navToggle)) {
+                    navToggle.remove();
+                }
+                navUl.style.display = 'flex';
+            }
+        }
+        
+        window.addEventListener('resize', checkScreenSize);
+        checkScreenSize();
+    </script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
